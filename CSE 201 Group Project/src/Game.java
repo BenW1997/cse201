@@ -4,16 +4,17 @@ import java.util.List;
 public class Game
 {
 	Board board = new Board();
-	Participant whoseTurn = Participant.one;
+	Player whoseTurn = Player.ONE;
 	
 	public Game()
 	{
 		newGame();
+		whoseTurn = Math.random() > 0.5 ? Player.ONE : Player.TWO;
 	}
 	
-	public Game(Participant p)
+	public Game(Player p)
 	{
-		this();
+		newGame();
 		whoseTurn = p;
 	}
 	
@@ -24,11 +25,16 @@ public class Game
 	
 	public void move(int index)
 	{
-		List<Tuple<Integer, Integer>> moves = getStoneMoves(index);
+		List<Move> moves = getStoneMoves(index);
 		
-		for(Tuple<Integer, Integer> t : moves) {
-			board.move(t.first(), t.second());
+		for(Move m : moves)
+		{
+			board.move(m);
 		}
+		
+		// TODO handle captures
+		
+		this.whoseTurn = this.whoseTurn.opposite();
 	}
 	
 	public boolean validMove(int index)
@@ -37,7 +43,7 @@ public class Game
 		{
 			return false;
 		}
-		if(board.participant(index) != whoseTurn)
+		if(board.player(index) != whoseTurn)
 		{
 			return false;
 		}
@@ -49,25 +55,63 @@ public class Game
 		return true;
 	}
 	
-	public List<Tuple<Integer, Integer>> getStoneMoves(int index) // TODO check logic
+	// TODO Fix mancalas not getting stones added.
+	public List<Move> getStoneMoves(int index)
 	{
-		List<Tuple<Integer, Integer>> moves = new ArrayList<>();
+		List<Move> moves = new ArrayList<>();
 		int stones = board.stones(index);
 		
-		for(int i = board.next(index);stones > 0;i = board.next(i))
+		for(int i = Board.next(index); stones > 0; i = Board.next(i))
 		{
 			Bin next = board.getBin(i);
 			
 			// skip opponent's mancala
-			if(next.isMancala() && next.participant != whoseTurn)
+			if(next.isMancala() && next.player != whoseTurn)
 			{
-				continue;
+				i = Board.next(i);
 			}
 			
-			moves.add(new Tuple<>(index, i));
-			stones -= 1;
+			moves.add(new Move(index, i));
+			stones--;
 		}
 		
 		return moves;
+	}
+	
+	@SuppressWarnings("unused")
+	private boolean captured(Move lastMove) // TODO finish and check
+	{
+		int lastIndex = lastMove.second();
+		if(board.stones(lastIndex) != 1 || board.isMancala(lastIndex)
+				|| board.player(lastIndex) != this.whoseTurn)
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
+	@SuppressWarnings("unused")
+	private List<Move> getCaptureMoves(Move lastMove) // TODO FIX
+	{
+		List<Move> moves = new ArrayList<>();
+		
+		List<Move> captureMoves = getCaptureMoves(lastMove);
+		for(Move m : captureMoves)
+		{
+			moves.add(m);
+		}
+		
+		return moves;
+	}
+	
+	public Board getBoard()
+	{
+		return this.board;
+	}
+	
+	public String toString()
+	{
+		return "";
 	}
 }
