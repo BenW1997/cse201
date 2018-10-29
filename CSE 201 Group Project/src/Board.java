@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class Board
 {
@@ -9,7 +9,7 @@ public class Board
 	 */
 	public final static int SIZE = 14;
 	
-	private List<Bin> bins;
+	private int[] bins;
 	
 	public Board()
 	{
@@ -18,128 +18,92 @@ public class Board
 	
 	public void initialize()
 	{
-		bins = new ArrayList<>(SIZE);
+		bins = new int[SIZE];
 		
-		int midpoint = SIZE / 2;
 		for(int i = 0; i < SIZE; i++)
 		{
-			Player p = (i < midpoint) ? Player.ONE : Player.TWO;
-			boolean isMancala = (i % midpoint == midpoint - 1); // only indices
-																// 6 and 13
-			int stones = (isMancala) ? 0 : 4; // 0 for mancala, 4 for everything
-												// else
-			
-			bins.add(i, new Bin(stones, isMancala, p));
+			bins[i] = isMancala(i) ? 0 : 4;
 		}
 	}
 	
+	public void move(Move move)
+	{
+		bins[move.first()]--;
+		bins[move.second()]++;
+	}
+
 	public int stones(int index)
 	{
-		checkBounds(index);
-		
-		return bins.get(index).getStones();
+		return bins[index];
 	}
 	
-	public boolean isMancala(int index)
+	public void setStones(int index, int count)
 	{
-		checkBounds(index);
-		
-		return bins.get(index).isMancala();
+		bins[index] = count;
 	}
 	
-	public Player player(int index)
-	{
-		checkBounds(index);
-		
-		return bins.get(index).player;
-	}
-	
-	public Bin getBin(int index)
-	{
-		checkBounds(index);
-		
-		return bins.get(index);
-	}
-	
-	public void setBinCount(int index, int count)
-	{
-		checkBounds(index);
-		
-		if(0 > count || count > (SIZE - 2) * 4)
-		{
-			// TODO throw ex
-		}
-		
-		bins.get(index).setStones(count);
-	}
-	
-	/**
-	 * Returns the index of the bin on the opposite side of the one specified.
-	 * For the mancalas (indices 0 and 7), it returns the index of the other
-	 * mancala.
-	 * 
-	 * @param index Index to find opposite of
-	 * @return Index of opposite bin
-	 */
 	public static int getOppositeIndex(int index)
 	{
-		checkBounds(index);
-		
 		// The equation breaks for indices 0 and 7, so we make exceptions.
 		if(index == 0)
 		{
 			return SIZE / 2;
-		}else if(index == SIZE / 2)
+		}
+		else if(index == SIZE / 2)
 		{
 			return 0;
 		}
 		
 		return SIZE - index; // TODO check logic
 	}
-	
+
+	public static boolean isMancala(int index)
+	{
+		return index % (SIZE / 2) == SIZE / 2 - 1; // only indices 6, 13
+	}
+
 	public static int next(int index)
 	{
 		return (index + 1) % SIZE;
 	}
-	
-	public void move(int source, int destination)
+
+	public static Player player(int index)
 	{
-		checkBounds(source);
-		checkBounds(destination);
-		
-		bins.get(source).decrement();
-		bins.get(destination).increment();
+		return (index < SIZE / 2) ? Player.ONE : Player.TWO;
 	}
-	
-	public void move(Move move)
-	{
-		checkBounds(move.first());
-		checkBounds(move.second());
-		
-		bins.get(move.first()).decrement();
-		bins.get(move.second()).increment();
-	}
-	
-	private static void checkBounds(int index) throws IndexOutOfBoundsException
-	{
-		if(0 > index || index >= SIZE)
-		{
-			throw new IndexOutOfBoundsException();
-		}
-	}
-	
+
 	public String toString()
 	{
 		String s = "";
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(os);
 		
-		for(Bin b : bins)
+		/*
+		 * for(Bin b : bins) { s += b.Player + ","; s += b.getStones() +
+		 * ","; s += b.isMancala() ? "O" : "_"; s += "; "; } s += "\n";
+		 */
+		
+		ps.println("The board now is");
+		ps.println("    ");
+		for(int i = 13; i > 7; i--)
 		{
-			s += /* "owner: " + */ b.player + ", ";
-			s += /* "stones: " + */ b.getStones() + ",";
-			s += /* "isMancala: " + */ b.isMancala() ? "+" : "-";
-			s += "; ";
+			ps.print("    ");
+			ps.printf("%02d", bins[(i - 1) % 14]);
 		}
+		ps.println("    ");
+		ps.println(bins[13]
+				+ "                                     "
+				+ bins[6]);
+		for(int i = 1; i < 7; i++)
+		{
+			ps.print("    ");
+			ps.printf("%02d", bins[(i - 1) % 14]);
+		}
+		ps.println("    ");
+		
+		s += os.toString() + "\n";
 		
 		return s;
 	}
+	
 }
