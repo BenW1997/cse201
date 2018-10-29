@@ -93,6 +93,7 @@ public class GameState
 		while(oppStones > 0)
 		{
 			capMoves.add(new Move(opp, ownMancala));
+			oppStones--;
 		}
 		
 		return capMoves;
