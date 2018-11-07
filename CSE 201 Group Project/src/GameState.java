@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameState
 {
@@ -20,7 +18,7 @@ public class GameState
 		whoseTurn = p;
 	}
 	
-	public List<Move> move(int index)
+	public void move(List<Move> moveSet)
 	{
 		List<Move> moves = getStoneMoves(index);
 		List<Move> capMoves = new ArrayList<>();
