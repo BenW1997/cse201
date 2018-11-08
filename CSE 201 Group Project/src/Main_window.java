@@ -1,84 +1,102 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import java.awt.Cursor;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-public class Main_window{
-
+public class Main_window
+{
+	
 	private JFrame frame;
-
+	private JDialog statDialog;
+	
 	/**
 	 * Launch the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
 					Main_window window = new Main_window();
+					window.frame.setLocationByPlatform(true);
 					window.frame.setVisible(true);
-				} catch (Exception e) {
+				}
+				catch(Exception e)
+				{
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		
 	}
-
+	
 	/**
 	 * Create the application.
+	 * @wbp.parser.entryPoint
 	 */
-	public Main_window() {
+	public Main_window()
+	{
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
-	private void initialize() {
+	private void initialize()
+	{
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1280, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		JPanel jplStart = new JPanel(new BorderLayout());
+		
 		JLabel lblMancala = new JLabel("Mancala");
 		lblMancala.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMancala.setFont(new Font("Comic Sans MS", Font.BOLD, 99));
-		frame.getContentPane().add(lblMancala, BorderLayout.NORTH);
+		jplStart.add(lblMancala, BorderLayout.NORTH);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
-		frame.getContentPane().add(horizontalStrut, BorderLayout.WEST);
+		jplStart.add(horizontalStrut, BorderLayout.WEST);
 		
 		Box horizontalBox = Box.createHorizontalBox();
-		frame.getContentPane().add(horizontalBox, BorderLayout.EAST);
+		jplStart.add(horizontalBox, BorderLayout.EAST);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
-		frame.getContentPane().add(verticalStrut, BorderLayout.SOUTH);
+		jplStart.add(verticalStrut, BorderLayout.SOUTH);
 		
 		Box verticalBox = Box.createVerticalBox();
-		frame.getContentPane().add(verticalBox, BorderLayout.CENTER);
+		jplStart.add(verticalBox, BorderLayout.CENTER);
 		
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_3);
+		Component verticalGlue_1 = Box.createVerticalGlue();
+		verticalBox.add(verticalGlue_1);
 		
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1);
 		
 		JButton btnPlay = new JButton("Play");
-		btnPlay.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnPlay.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPlay.setPreferredSize(new Dimension(200, 60));
+		btnPlay.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 				frame.setVisible(false);
 				initialize2();
 				frame.setVisible(true);
@@ -88,51 +106,69 @@ public class Main_window{
 		horizontalBox_1.add(btnPlay);
 		btnPlay.setVerticalAlignment(SwingConstants.TOP);
 		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_1);
+		Component verticalGlue_2 = Box.createVerticalGlue();
+		verticalBox.add(verticalGlue_2);
 		
 		Box horizontalBox_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_2);
 		
 		JButton btnStatistics = new JButton("Statistics");
-		btnStatistics.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnStatistics.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnStatistics.setPreferredSize(new Dimension(200, 60));
+		btnStatistics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 				frame.setVisible(false);
 				initialize3();
-				frame.setVisible(true);
+				//frame.setVisible(true);
 			}
 		});
 		
 		horizontalBox_2.add(btnStatistics);
 		
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_2);
+		Component verticalGlue_3 = Box.createVerticalGlue();
+		verticalBox.add(verticalGlue_3);
 		
 		Box horizontalBox_3 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_3);
 		
 		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnExit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnExit.setPreferredSize(new Dimension(200, 60));
+		btnExit.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 				frame.setVisible(false);
+				System.exit(0);
 			}
 		});
 		
 		horizontalBox_3.add(btnExit);
-	}
-
-	
-private void initialize2() {
 		
-		String four = "5";
+		Component verticalGlue = Box.createVerticalGlue();
+		verticalBox.add(verticalGlue);
+		
+		frame.getContentPane().add(jplStart);
+	}
+	
+	/**
+	 * @wbp.parser.entryPoint
+	 */
+	private void initialize2()
+	{
 		frame = new JFrame();
+		JPanel jplMancala = new JPanel();
+		jplMancala.setLayout(null);
+		String four = "4";
 		frame.setBounds(100, 100, 1040, 639);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		//frame.getContentPane().setLayout(null);
 		
 		Box horizontalBox = Box.createHorizontalBox();
 		horizontalBox.setBounds(0, 0, 1034, 619);
-		frame.getContentPane().add(horizontalBox);
+		jplMancala.add(horizontalBox);
 		
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		horizontalBox.add(verticalStrut_2);
@@ -210,8 +246,10 @@ private void initialize2() {
 		verticalBox.add(horizontalBox_3);
 		
 		JButton btnNewButton_1 = new JButton("Surrender");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnNewButton_1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_3.add(btnNewButton_1);
@@ -226,8 +264,10 @@ private void initialize2() {
 		horizontalBox_3.add(horizontalStrut_1);
 		
 		JButton btnEnd = new JButton("End");
-		btnEnd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnEnd.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 				frame.setVisible(false);
 				initialize();
 				frame.setVisible(true);
@@ -242,8 +282,10 @@ private void initialize2() {
 		verticalBox.add(horizontalBox_2);
 		
 		JButton btnbin1 = new JButton("4");
-		btnbin1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnbin1.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
 			}
 		});
 		btnbin1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -253,8 +295,10 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_4);
 		
 		JButton btnbin2 = new JButton("4");
-		btnbin2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnbin2.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_2.add(btnbin2);
@@ -263,8 +307,10 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_5);
 		
 		JButton btnbin3 = new JButton("4");
-		btnbin3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnbin3.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_2.add(btnbin3);
@@ -273,8 +319,10 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_6);
 		
 		JButton btnbin4 = new JButton("4");
-		btnbin4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnbin4.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_2.add(btnbin4);
@@ -283,8 +331,10 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_14);
 		
 		JButton btnbin5 = new JButton("4");
-		btnbin5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnbin5.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_2.add(btnbin5);
@@ -293,8 +343,10 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_15);
 		
 		JButton btnbin6 = new JButton("4");
-		btnbin6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btnbin6.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 			}
 		});
 		horizontalBox_2.add(btnbin6);
@@ -315,18 +367,30 @@ private void initialize2() {
 		horizontalBox.add(verticalStrut);
 		
 		JLabel Background = new JLabel("");
-		Background.setIcon(new ImageIcon("C:\\Users\\beenn\\git\\cse201\\CSE 201 Group Project\\MANCALA-game_bg_combined.jpg"));
+		Background.setIcon(new ImageIcon(
+				"assets/MANCALA-game_bg_combined.jpg"));
 		Background.setBounds(0, 0, 1024, 600);
-		frame.getContentPane().add(Background);
+		jplMancala.add(Background);
+		frame.getContentPane().add(jplMancala);
 	}
 	
-	private void initialize3() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 720);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	private void initialize3()
+	{
+		//frame = new JFrame();
+		//frame.setBounds(100, 100, 1280, 720);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel jplStat = new JPanel(new BorderLayout());
+		statDialog = new JDialog();
+		statDialog.setBounds(200, 200, 640, 460);
+		statDialog.setMinimumSize(new Dimension(500, 400));
+		statDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		statDialog.setAlwaysOnTop(true);
 		
 		Box verticalBox_2 = Box.createVerticalBox();
-		frame.getContentPane().add(verticalBox_2, BorderLayout.CENTER);
+		//frame.getContentPane().add(verticalBox_2, BorderLayout.CENTER);
+		jplStat.add(verticalBox_2, BorderLayout.CENTER);
+		
 		
 		Box horizontalBox = Box.createHorizontalBox();
 		verticalBox_2.add(horizontalBox);
@@ -379,17 +443,26 @@ private void initialize2() {
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		horizontalBox.add(horizontalStrut);
 		
+		Box horizontalBox_1 = Box.createHorizontalBox();
+		verticalBox_2.add(horizontalBox_1);
+		
 		JButton btnReturn = new JButton("Return");
-		btnReturn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				frame.setVisible(false);
+		horizontalBox_1.add(btnReturn);
+		btnReturn.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				statDialog.setVisible(false);
 				initialize();
-				frame.setVisible(true);
+				//frame.setVisible(true);
 			}
 		});
-		verticalBox_2.add(btnReturn);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		verticalBox_2.add(verticalStrut);
+		
+		statDialog.getContentPane().add(jplStat);
+		statDialog.setVisible(true);
+		statDialog.pack();
 	}
 }
