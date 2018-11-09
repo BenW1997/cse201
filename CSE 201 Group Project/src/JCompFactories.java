@@ -1,88 +1,48 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Cursor;
 
-public class Main_window
+public class JCompFactories
 {
-	
-	private JFrame frame;
-	private JDialog statDialog;
+	private final static Rectangle WINDOW_SIZE = new Rectangle(0, 0, 1024, 600);
 	
 	/**
-	 * Launch the application.
 	 * @wbp.parser.entryPoint
 	 */
-	public static void main(String[] args)
+	public static JComponent jcompMain()
 	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					Main_window window = new Main_window();
-					window.frame.setLocationByPlatform(true);
-					window.frame.setVisible(true);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	/**
-	 * Create the application.
-	 * @wbp.parser.entryPoint
-	 */
-	public Main_window()
-	{
-		initialize();
-	}
-	
-	/**
-	 * Initialize the contents of the frame.
-	 * @wbp.parser.entryPoint
-	 */
-	private void initialize()
-	{
-		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 720);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel jplStart = new JPanel(new BorderLayout());
-		
+		JComponent jcompMain = new JPanel(new BorderLayout());
+		jcompMain.setBounds(WINDOW_SIZE);
+
 		JLabel lblMancala = new JLabel("Mancala");
 		lblMancala.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMancala.setFont(new Font("Comic Sans MS", Font.BOLD, 99));
-		jplStart.add(lblMancala, BorderLayout.NORTH);
+		jcompMain.add(lblMancala, BorderLayout.NORTH);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
-		jplStart.add(horizontalStrut, BorderLayout.WEST);
+		jcompMain.add(horizontalStrut, BorderLayout.WEST);
 		
 		Box horizontalBox = Box.createHorizontalBox();
-		jplStart.add(horizontalBox, BorderLayout.EAST);
+		jcompMain.add(horizontalBox, BorderLayout.EAST);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
-		jplStart.add(verticalStrut, BorderLayout.SOUTH);
+		jcompMain.add(verticalStrut, BorderLayout.SOUTH);
 		
 		Box verticalBox = Box.createVerticalBox();
-		jplStart.add(verticalBox, BorderLayout.CENTER);
+		jcompMain.add(verticalBox, BorderLayout.CENTER);
 		
 		Component verticalGlue_1 = Box.createVerticalGlue();
 		verticalBox.add(verticalGlue_1);
@@ -97,9 +57,7 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				frame.setVisible(false);
-				initialize2();
-				frame.setVisible(true);
+				
 			}
 		});
 		
@@ -119,8 +77,8 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				frame.setVisible(false);
-				initialize3();
+				//frame.setVisible(false);
+				//initialize3();
 				//frame.setVisible(true);
 			}
 		});
@@ -140,7 +98,7 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				frame.setVisible(false);
+				//frame.setVisible(false);
 				System.exit(0);
 			}
 		});
@@ -150,25 +108,21 @@ public class Main_window
 		Component verticalGlue = Box.createVerticalGlue();
 		verticalBox.add(verticalGlue);
 		
-		frame.getContentPane().add(jplStart);
+		return jcompMain;
 	}
 	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
-	private void initialize2()
+	public static JComponent jcompMancala()
 	{
-		frame = new JFrame();
-		JPanel jplMancala = new JPanel();
-		jplMancala.setLayout(null);
-		String four = "4";
-		frame.setBounds(100, 100, 1040, 639);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.getContentPane().setLayout(null);
+		JComponent jcompMancala = new JPanel();
+		jcompMancala.setBounds(WINDOW_SIZE);
+		jcompMancala.setLayout(null);
 		
 		Box horizontalBox = Box.createHorizontalBox();
-		horizontalBox.setBounds(0, 0, 1034, 619);
-		jplMancala.add(horizontalBox);
+		horizontalBox.setBounds(WINDOW_SIZE);
+		jcompMancala.add(horizontalBox);
 		
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
 		horizontalBox.add(verticalStrut_2);
@@ -202,7 +156,7 @@ public class Main_window
 		
 		Component verticalStrut_11 = Box.createVerticalStrut(20);
 		horizontalBox_1.add(verticalStrut_11);
-		bin5 = new JLabel(four);
+		bin5 = new JLabel("4");
 		bin5.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin5.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin5);
@@ -268,9 +222,9 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				frame.setVisible(false);
-				initialize();
-				frame.setVisible(true);
+				//frame.setVisible(false);
+				//initialize();
+				//frame.setVisible(true);
 			}
 		});
 		horizontalBox_3.add(btnEnd);
@@ -286,6 +240,7 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
+				
 			}
 		});
 		btnbin1.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -370,26 +325,19 @@ public class Main_window
 		Background.setIcon(new ImageIcon(
 				"assets/MANCALA-game_bg_combined.jpg"));
 		Background.setBounds(0, 0, 1024, 600);
-		jplMancala.add(Background);
-		frame.getContentPane().add(jplMancala);
+		jcompMancala.add(Background);
+		
+		return jcompMancala;
 	}
 	
-	private void initialize3()
+	public static JComponent jcompStat()
 	{
-		//frame = new JFrame();
-		//frame.setBounds(100, 100, 1280, 720);
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel jplStat = new JPanel(new BorderLayout());
-		statDialog = new JDialog();
-		statDialog.setBounds(200, 200, 640, 460);
-		statDialog.setMinimumSize(new Dimension(500, 400));
-		statDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		statDialog.setAlwaysOnTop(true);
+		JComponent jcompStat = new JPanel(new BorderLayout());
+		jcompStat.setBounds(WINDOW_SIZE);
 		
 		Box verticalBox_2 = Box.createVerticalBox();
 		//frame.getContentPane().add(verticalBox_2, BorderLayout.CENTER);
-		jplStat.add(verticalBox_2, BorderLayout.CENTER);
+		jcompStat.add(verticalBox_2, BorderLayout.CENTER);
 		
 		
 		Box horizontalBox = Box.createHorizontalBox();
@@ -452,8 +400,8 @@ public class Main_window
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				statDialog.setVisible(false);
-				initialize();
+				//statDialog.setVisible(false);
+				//initialize();
 				//frame.setVisible(true);
 			}
 		});
@@ -461,8 +409,6 @@ public class Main_window
 		Component verticalStrut = Box.createVerticalStrut(20);
 		verticalBox_2.add(verticalStrut);
 		
-		statDialog.getContentPane().add(jplStat);
-		statDialog.setVisible(true);
-		statDialog.pack();
+		return jcompStat;
 	}
 }
