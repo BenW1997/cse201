@@ -1,22 +1,13 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
-
 public class MachineInput implements PlayerInput
 {
 	// Moves possible for AI only for bins 7 - 12.
 	// It owns 7 - 13, but 13 is a mancala.
-	
 	private final int[] ALL_MOVES_POSSIBLE =
-	{ 7, 8, 9, 10, 11, 12 };
-	private Map<SCORE_TYPE, Double> biasFromType;
-	
-	
+	{ 7, 8, 9, 10, 11, 12 };	
 	
 	public MachineInput()
 	{
-		biasFromType = new HashMap<>();
-		biasFromType.put(SCORE_TYPE.CAN_LAND_IN_MANCALA, 1.0);
+		
 	}
 	
 	public int getMove(Board boardState)
