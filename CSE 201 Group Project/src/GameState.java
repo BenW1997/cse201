@@ -18,17 +18,17 @@ public class GameState
 		whoseTurn = p;
 	}
 	
-	public void move(List<Move> moveSet)
+	public void move(List<Pair> moveSet)
 	{
-		for(Move m : moveSet)
+		for(Pair m : moveSet)
 		{
 			board.move(m);
 		}
 	}
 	
-	public List<Move> getStoneMoves(int index)
+	public List<Pair> getStoneMoves(int index)
 	{
-		List<Move> moves = new ArrayList<>();
+		List<Pair> moves = new ArrayList<>();
 		int stones = board.stones(index);
 		
 		for(int i = Board.next(index); stones > 0; i = Board.next(i))
@@ -36,7 +36,7 @@ public class GameState
 			// skip opponent's mancala
 			if(!Board.isMancala(i) || Board.player(i) == whoseTurn)
 			{
-				moves.add(new Move(index, i));
+				moves.add(new Pair(index, i));
 				stones--;
 			}
 		}
@@ -44,31 +44,31 @@ public class GameState
 		return moves;
 	}
 	
-	public List<Move> getCaptureMoves(int lastMoveDest)
+	public List<Pair> getCaptureMoves(int lastMoveDest)
 	{
-		List<Move> capMoves = new ArrayList<>();
+		List<Pair> capMoves = new ArrayList<>();
 		int ownMancala = (whoseTurn == Player.ONE) ? 6 : 13;
 		int opp = Board.getOppositeIndex(lastMoveDest);
 		int oppStones = board.stones(opp);
 		
-		capMoves.add(new Move(lastMoveDest, ownMancala));
+		capMoves.add(new Pair(lastMoveDest, ownMancala));
 		while(oppStones > 0)
 		{
-			capMoves.add(new Move(opp, ownMancala));
+			capMoves.add(new Pair(opp, ownMancala));
 			oppStones--;
 		}
 		
 		return capMoves;
 	}
 	
-	public List<Move> getWinMoves()
+	public List<Pair> getWinMoves()
 	{
 		if(!gameWon())
 		{
-			return new ArrayList<Move>();
+			return new ArrayList<Pair>();
 		}
 		
-		List<Move> winMoves = new ArrayList<>();
+		List<Pair> winMoves = new ArrayList<>();
 		Player receivingPlayer = null;
 		int receivingMancala = -1;
 		
@@ -97,7 +97,7 @@ public class GameState
 			{
 				for(int j = board.stones(i); j > 0; j--)
 				{
-					winMoves.add(new Move(i, receivingMancala));
+					winMoves.add(new Pair(i, receivingMancala));
 				}
 			}
 		}

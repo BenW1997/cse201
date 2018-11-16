@@ -27,7 +27,7 @@ public class Board
 		}
 	}
 	
-	public void move(Move move)
+	public void move(Pair move)
 	{
 		bins[move.first()]--;
 		bins[move.second()]++;
