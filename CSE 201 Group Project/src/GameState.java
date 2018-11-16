@@ -132,7 +132,7 @@ public class GameState
 		boolean empty1 = true;
 		boolean empty2 = true;
 		
-		for(int i = 0; i < 5; i++)
+		for(int i = 0; i <= 5; i++)
 		{
 			if(board.stones(i) != 0)
 			{
@@ -141,7 +141,7 @@ public class GameState
 			}
 		}
 		
-		for(int i = 7; i < 12; i++)
+		for(int i = 7; i <= 12; i++)
 		{
 			if(board.stones(i) != 0)
 			{
