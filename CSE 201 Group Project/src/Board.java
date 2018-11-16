@@ -63,6 +63,11 @@ public class Board
 		return index % (SIZE / 2) == SIZE / 2 - 1; // only indices 6, 13
 	}
 
+	public static int mancalaOf(Player p)
+	{
+		return p == Player.ONE ? 6 : 13;
+	}
+	
 	public static int next(int index)
 	{
 		return (index + 1) % SIZE;
