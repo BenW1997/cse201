@@ -61,6 +61,50 @@ public class GameState
 		return capMoves;
 	}
 	
+	public List<Move> getWinMoves()
+	{
+		if(!gameWon())
+		{
+			return new ArrayList<Move>();
+		}
+		
+		List<Move> winMoves = new ArrayList<>();
+		Player receivingPlayer = null;
+		int receivingMancala = -1;
+		
+		// determine who has stones left
+		for(int i = 0; i <= 13; i++)
+		{
+			if(Board.isMancala(i))
+			{
+				continue;
+			}
+			
+			if(board.stones(i) > 0)
+			{
+				receivingPlayer = Board.player(i);
+				receivingMancala = Board.mancalaOf(receivingPlayer);
+				assert (receivingPlayer == whoseTurn.opposite());
+				
+				break;
+			}
+		}
+		
+		// move stones to mancala
+		for(int i = 0; i <= 13; i++)
+		{
+			if(!Board.isMancala(i) && Board.player(i) == receivingPlayer)
+			{
+				for(int j = board.stones(i); j > 0; j--)
+				{
+					winMoves.add(new Move(i, receivingMancala));
+				}
+			}
+		}
+		
+		return winMoves;
+	}
+	
 	public boolean validMove(int index)
 	{
 		if(0 > index || index > 13)
@@ -88,18 +132,18 @@ public class GameState
 		boolean empty1 = true;
 		boolean empty2 = true;
 		
-		for (int i = 0; i < 5; i++)
+		for(int i = 0; i < 5; i++)
 		{
-			if (board.stones(i) != 0)
+			if(board.stones(i) != 0)
 			{
 				empty1 = false;
 				break;
 			}
 		}
 		
-		for (int i = 7; i < 12; i++)
+		for(int i = 7; i < 12; i++)
 		{
-			if (board.stones(i) != 0)
+			if(board.stones(i) != 0)
 			{
 				empty2 = false;
 				break;
