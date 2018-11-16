@@ -105,7 +105,7 @@ public class GameState
 		return winMoves;
 	}
 	
-	public boolean validMove(int index)
+	public boolean isValidMove(int index)
 	{
 		if(0 > index || index > 13)
 		{
@@ -127,6 +127,25 @@ public class GameState
 		return true;
 	}
 	
+	public List<Integer> validMoves()
+	{
+		List<Integer> valid = new ArrayList<>();
+		
+		// only check ranges known to be owned by player
+		int start = (whoseTurn == Player.ONE) ? 0 : 7; 
+		int finish = (whoseTurn == Player.ONE) ? 5 : 12;
+		
+		for(int i = start; i <= finish; i++)
+		{
+			if(board.stones(i) > 0)
+			{
+				valid.add(i);
+			}
+		}
+		
+		return valid;
+	}
+
 	public boolean gameWon()
 	{
 		boolean empty1 = true;
