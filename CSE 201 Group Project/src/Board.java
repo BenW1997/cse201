@@ -27,7 +27,7 @@ public class Board
 		}
 	}
 	
-	public void move(Pair move)
+	public void move(Move move)
 	{
 		bins[move.first()]--;
 		bins[move.second()]++;
@@ -41,6 +41,11 @@ public class Board
 	public void setStones(int index, int count)
 	{
 		bins[index] = count;
+	}
+	
+	public int[] getBins()
+	{
+		return bins;
 	}
 	
 	public static int getOppositeIndex(int index)
