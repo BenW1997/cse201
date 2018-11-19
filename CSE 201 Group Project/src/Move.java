@@ -1,9 +1,9 @@
-public class Pair
+public class Move
 {
 	private final int first;
 	private final int second;
 	
-	public Pair(int first, int second)
+	public Move(int first, int second)
 	{
 		this.first = first;
 		this.second = second;
