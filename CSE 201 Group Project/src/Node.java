@@ -61,14 +61,6 @@ public class Node<T>
 		this.parent = parent;
 	}
 	
-	// TODO
-	/*
-	 * public void delete() { for(Node<T> node : children) {
-	 * if(node.children.isEmpty()) {
-	 * 
-	 * } } }
-	 */
-	
 	public Node<T> getRoot()
 	{
 		if(this.isRoot())
