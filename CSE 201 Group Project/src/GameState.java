@@ -5,6 +5,7 @@ public class GameState
 {
 	private Board board = new Board();
 	private Player whoseTurn = Player.ONE;
+	private int lastMoveFrom = -1;
 	
 	public GameState()
 	{
@@ -16,6 +17,13 @@ public class GameState
 	{
 		board.initialize();
 		whoseTurn = p;
+	}
+	
+	public GameState(GameState game)
+	{
+		this.board = new Board(game.getBoard());
+		this.whoseTurn = game.whoseTurn();
+		this.lastMoveFrom = game.lastMoveFrom();
 	}
 	
 	// returns all moves made in batches for separate processing
@@ -39,7 +47,6 @@ public class GameState
 		}
 		
 		setOfMoveSets.forEach(moveSet -> moveAll(moveSet));
-		
 		return setOfMoveSets;
 	}
 	
@@ -47,6 +54,7 @@ public class GameState
 	{
 		for(Move m : moveSet)
 		{
+			lastMoveFrom = m.first();
 			board.move(m);
 		}
 	}
@@ -224,6 +232,13 @@ public class GameState
 	public Player whoseTurn()
 	{
 		return whoseTurn;
+	}
+	
+	// returns -1 if the board is fresh. otherwise, returns last index a move
+	// was made from.
+	public int lastMoveFrom()
+	{
+		return lastMoveFrom;
 	}
 	
 	public Board getBoard()
