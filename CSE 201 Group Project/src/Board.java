@@ -1,5 +1,6 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class Board
 {
@@ -15,6 +16,11 @@ public class Board
 	public Board()
 	{
 		initialize();
+	}
+	
+	public Board(Board board)
+	{
+		this.bins = Arrays.copyOf(board.getBins(), SIZE);
 	}
 	
 	public void initialize()
