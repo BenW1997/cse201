@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Node<T>
 {
@@ -22,6 +23,11 @@ public class Node<T>
 	{
 		child.setParent(this);
 		this.children.add(child);
+	}
+	
+	public void addChild(T t)
+	{
+		addChild(new Node<T>(t));
 	}
 	
 	public void addChildren(List<Node<T>> children)
@@ -55,24 +61,47 @@ public class Node<T>
 		this.parent = parent;
 	}
 	
-	public void delete()
-	{
-		for(Node<T> node : children)
-		{
-			if(node.children.isEmpty())
-			{
-				
-			}
-		}
-	}
+	// TODO
+	/*
+	 * public void delete() { for(Node<T> node : children) {
+	 * if(node.children.isEmpty()) {
+	 * 
+	 * } } }
+	 */
 	
 	public Node<T> getRoot()
 	{
-		if(this.parent == null)
+		if(this.isRoot())
 		{
 			return this;
 		}
 		
 		return parent.getRoot();
+	}
+	
+	public boolean isRoot()
+	{
+		return parent == null;
+	}
+	
+	public void forEachChild(Consumer<Node<T>> f)
+	{
+		children.forEach(f);
+	}
+	
+	// Returns s-expression representation of tree.
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		sb.append("(node ").append(data);
+		for(Node<T> node : children)
+		{
+			sb.append(System.lineSeparator()).append("\t")
+					.append(node.toString());
+			
+		}
+		sb.append(")");
+		
+		return sb.toString();
 	}
 }
