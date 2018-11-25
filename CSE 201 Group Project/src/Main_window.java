@@ -50,7 +50,7 @@ public class Main_window{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 720);
+		frame.setBounds(300, 100, 1040, 639);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JLabel lblMancala = new JLabel("Mancala");
@@ -70,13 +70,14 @@ public class Main_window{
 		Box verticalBox = Box.createVerticalBox();
 		frame.getContentPane().add(verticalBox, BorderLayout.CENTER);
 		
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_3);
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		verticalBox.add(horizontalStrut_3);
 		
 		Box horizontalBox_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_1);
 		
 		JButton btnPlay = new JButton("Play");
+		btnPlay.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
@@ -88,13 +89,14 @@ public class Main_window{
 		horizontalBox_1.add(btnPlay);
 		btnPlay.setVerticalAlignment(SwingConstants.TOP);
 		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_1);
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		verticalBox.add(horizontalStrut_2);
 		
 		Box horizontalBox_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_2);
 		
 		JButton btnStatistics = new JButton("Statistics");
+		btnStatistics.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		btnStatistics.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
@@ -105,13 +107,14 @@ public class Main_window{
 		
 		horizontalBox_2.add(btnStatistics);
 		
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		verticalBox.add(verticalStrut_2);
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		verticalBox.add(horizontalStrut_1);
 		
 		Box horizontalBox_3 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_3);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
@@ -119,14 +122,17 @@ public class Main_window{
 		});
 		
 		horizontalBox_3.add(btnExit);
+		
+		Component horizontalStrut_4 = Box.createHorizontalStrut(20);
+		verticalBox.add(horizontalStrut_4);
 	}
 
 	
 private void initialize2() {
 		
-		String four = "5";
+		String four = "4";
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1040, 639);
+		frame.setBounds(300, 100, 1040, 639);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -134,17 +140,14 @@ private void initialize2() {
 		horizontalBox.setBounds(0, 0, 1034, 619);
 		frame.getContentPane().add(horizontalBox);
 		
-		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		horizontalBox.add(verticalStrut_2);
+		Component verticalStrut_19 = Box.createVerticalStrut(20);
+		horizontalBox.add(verticalStrut_19);
 		
 		JLabel lblbotbin = new JLabel("0");
 		lblbotbin.setAlignmentX(Component.CENTER_ALIGNMENT);
 		lblbotbin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblbotbin.setFont(new Font("Tahoma", Font.PLAIN, 99));
 		horizontalBox.add(lblbotbin);
-		
-		Component verticalStrut_17 = Box.createVerticalStrut(20);
-		horizontalBox.add(verticalStrut_17);
 		
 		Box verticalBox = Box.createVerticalBox();
 		verticalBox.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -157,7 +160,11 @@ private void initialize2() {
 		horizontalBox_1.setAlignmentY(Component.CENTER_ALIGNMENT);
 		verticalBox.add(horizontalBox_1);
 		
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		horizontalBox_1.add(verticalStrut_3);
+		
 		JLabel bin6 = new JLabel("4");
+		bin6.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin6.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin6.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin6);
@@ -167,6 +174,7 @@ private void initialize2() {
 		Component verticalStrut_11 = Box.createVerticalStrut(20);
 		horizontalBox_1.add(verticalStrut_11);
 		bin5 = new JLabel(four);
+		bin5.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin5.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin5.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin5);
@@ -175,6 +183,7 @@ private void initialize2() {
 		horizontalBox_1.add(verticalStrut_10);
 		
 		JLabel bin4 = new JLabel("4");
+		bin4.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin4.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin4.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin4);
@@ -183,6 +192,7 @@ private void initialize2() {
 		horizontalBox_1.add(verticalStrut_9);
 		
 		JLabel bin3 = new JLabel("4");
+		bin3.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin3.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin3);
@@ -191,6 +201,7 @@ private void initialize2() {
 		horizontalBox_1.add(verticalStrut_8);
 		
 		JLabel bin2 = new JLabel("4");
+		bin2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin2.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin2.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin2);
@@ -199,9 +210,13 @@ private void initialize2() {
 		horizontalBox_1.add(verticalStrut_7);
 		
 		JLabel bin1 = new JLabel("4");
+		bin1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		bin1.setAlignmentX(Component.CENTER_ALIGNMENT);
 		bin1.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox_1.add(bin1);
+		
+		Component verticalStrut_12 = Box.createVerticalStrut(20);
+		horizontalBox_1.add(verticalStrut_12);
 		
 		Component horizontalStrut_7 = Box.createHorizontalStrut(20);
 		verticalBox.add(horizontalStrut_7);
@@ -210,22 +225,28 @@ private void initialize2() {
 		verticalBox.add(horizontalBox_3);
 		
 		JButton btnNewButton_1 = new JButton("Surrender");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+		
+		Component verticalStrut = Box.createVerticalStrut(20);
+		horizontalBox_3.add(verticalStrut);
 		horizontalBox_3.add(btnNewButton_1);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		horizontalBox_3.add(horizontalStrut);
 		
 		JLabel lblNewLabel = new JLabel("Turn");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		horizontalBox_3.add(lblNewLabel);
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		horizontalBox_3.add(horizontalStrut_1);
 		
 		JButton btnEnd = new JButton("End");
+		btnEnd.setFont(new Font("Tahoma", Font.PLAIN, 30));
 		btnEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.setVisible(false);
@@ -235,6 +256,9 @@ private void initialize2() {
 		});
 		horizontalBox_3.add(btnEnd);
 		
+		Component verticalStrut_2 = Box.createVerticalStrut(20);
+		horizontalBox_3.add(verticalStrut_2);
+		
 		Component horizontalStrut_6 = Box.createHorizontalStrut(20);
 		verticalBox.add(horizontalStrut_6);
 		
@@ -242,17 +266,23 @@ private void initialize2() {
 		verticalBox.add(horizontalBox_2);
 		
 		JButton btnbin1 = new JButton("4");
+		btnbin1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnbin1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(20);
+		horizontalBox_2.add(verticalStrut_1);
 		horizontalBox_2.add(btnbin1);
 		
 		Component verticalStrut_4 = Box.createVerticalStrut(20);
 		horizontalBox_2.add(verticalStrut_4);
 		
 		JButton btnbin2 = new JButton("4");
+		btnbin2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -263,6 +293,8 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_5);
 		
 		JButton btnbin3 = new JButton("4");
+		btnbin3.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin3.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -273,6 +305,8 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_6);
 		
 		JButton btnbin4 = new JButton("4");
+		btnbin4.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin4.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -283,6 +317,8 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_14);
 		
 		JButton btnbin5 = new JButton("4");
+		btnbin5.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin5.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -293,17 +329,19 @@ private void initialize2() {
 		horizontalBox_2.add(verticalStrut_15);
 		
 		JButton btnbin6 = new JButton("4");
+		btnbin6.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnbin6.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnbin6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		horizontalBox_2.add(btnbin6);
 		
+		Component verticalStrut_13 = Box.createVerticalStrut(20);
+		horizontalBox_2.add(verticalStrut_13);
+		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
 		verticalBox.add(horizontalStrut_5);
-		
-		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		horizontalBox.add(verticalStrut_1);
 		
 		JLabel lblplayerbin = new JLabel("0");
 		lblplayerbin.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -311,8 +349,8 @@ private void initialize2() {
 		lblplayerbin.setHorizontalAlignment(SwingConstants.CENTER);
 		horizontalBox.add(lblplayerbin);
 		
-		Component verticalStrut = Box.createVerticalStrut(20);
-		horizontalBox.add(verticalStrut);
+		Component verticalStrut_18 = Box.createVerticalStrut(20);
+		horizontalBox.add(verticalStrut_18);
 		
 		JLabel Background = new JLabel("");
 		Background.setIcon(new ImageIcon("C:\\Users\\beenn\\git\\cse201\\CSE 201 Group Project\\MANCALA-game_bg_combined.jpg"));
@@ -322,7 +360,7 @@ private void initialize2() {
 	
 	private void initialize3() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1280, 720);
+		frame.setBounds(300, 100, 1040, 639);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		Box verticalBox_2 = Box.createVerticalBox();
