@@ -1,5 +1,6 @@
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 public class Board
 {
@@ -15,6 +16,11 @@ public class Board
 	public Board()
 	{
 		initialize();
+	}
+	
+	public Board(Board board)
+	{
+		this.bins = Arrays.copyOf(board.getBins(), SIZE);
 	}
 	
 	public void initialize()
@@ -43,6 +49,11 @@ public class Board
 		bins[index] = count;
 	}
 	
+	public int[] getBins()
+	{
+		return bins;
+	}
+	
 	public static int getOppositeIndex(int index)
 	{
 		// The equation breaks for indices 6 and 13, so we make exceptions.
@@ -63,6 +74,11 @@ public class Board
 		return index % (SIZE / 2) == SIZE / 2 - 1; // only indices 6, 13
 	}
 
+	public static int mancalaOf(Player p)
+	{
+		return p == Player.ONE ? 6 : 13;
+	}
+	
 	public static int next(int index)
 	{
 		return (index + 1) % SIZE;

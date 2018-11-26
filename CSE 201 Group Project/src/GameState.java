@@ -1,12 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class GameState
 {
-	Board board = new Board();
-	Player whoseTurn = Player.ONE;
+	private Board board = new Board();
+	private Player whoseTurn = Player.ONE;
+	private int lastMoveFrom = -1;
 	
 	public GameState()
 	{
@@ -20,48 +19,44 @@ public class GameState
 		whoseTurn = p;
 	}
 	
-	public void move(List<Move> moveSet)
+	public GameState(GameState game)
 	{
-		List<Move> moves = getStoneMoves(index);
-		List<Move> capMoves = new ArrayList<>();
-		int lastMoveDest;
-		boolean goAgain = false;
-		
-		for(Move m : moves)
+		this.board = new Board(game.getBoard());
+		this.whoseTurn = game.whoseTurn();
+		this.lastMoveFrom = game.lastMoveFrom();
+	}
+	
+	// returns all moves made in batches for separate processing
+	public List<List<Move>> move(int index)
+	{
+		List<List<Move>> setOfMoveSets = new ArrayList<>();
+		if(!isValidMove(index))
 		{
+			setOfMoveSets.add(new ArrayList<>()); // may be extraneous
+			return setOfMoveSets;
+		}
+		
+		setOfMoveSets.add(getStoneMoves(index));
+		if(capturePossible(index))
+		{
+			setOfMoveSets.add(getCaptureMoves(index));
+		}
+		if(gameWon())
+		{
+			setOfMoveSets.add(getWinMoves());
+		}
+		
+		setOfMoveSets.forEach(moveSet -> moveAll(moveSet));
+		return setOfMoveSets;
+	}
+	
+	public void moveAll(List<Move> moveSet)
+	{
+		for(Move m : moveSet)
+		{
+			lastMoveFrom = m.first();
 			board.move(m);
 		}
-		
-		if(!moves.isEmpty())
-		{
-			lastMoveDest = moves.get(moves.size() - 1).second();
-			if(Board.isMancala(lastMoveDest))
-			{
-				goAgain = true;
-			}
-			
-			if(capturePossible(lastMoveDest))
-			{
-				capMoves = getCaptureMoves(lastMoveDest);
-			}
-		}
-		
-		if(!capMoves.isEmpty())
-		{
-			for(Move m : capMoves)
-			{
-				board.move(m);
-			}
-		}
-		
-		if (!goAgain)
-		{
-			whoseTurn = whoseTurn.opposite();
-		}
-
-		List<Move> allMoves = Stream.concat(moves.stream(), capMoves.stream())
-				.collect(Collectors.toList());
-		return allMoves;
 	}
 	
 	public List<Move> getStoneMoves(int index)
@@ -99,7 +94,51 @@ public class GameState
 		return capMoves;
 	}
 	
-	public boolean validMove(int index)
+	public List<Move> getWinMoves()
+	{
+		if(!gameWon())
+		{
+			return new ArrayList<Move>();
+		}
+		
+		List<Move> winMoves = new ArrayList<>();
+		Player receivingPlayer = null;
+		int receivingMancala = -1;
+		
+		// determine who has stones left
+		for(int i = 0; i <= 13; i++)
+		{
+			if(Board.isMancala(i))
+			{
+				continue;
+			}
+			
+			if(board.stones(i) > 0)
+			{
+				receivingPlayer = Board.player(i);
+				receivingMancala = Board.mancalaOf(receivingPlayer);
+				assert (receivingPlayer == whoseTurn.opposite());
+				
+				break;
+			}
+		}
+		
+		// move stones to mancala
+		for(int i = 0; i <= 13; i++)
+		{
+			if(!Board.isMancala(i) && Board.player(i) == receivingPlayer)
+			{
+				for(int j = board.stones(i); j > 0; j--)
+				{
+					winMoves.add(new Move(i, receivingMancala));
+				}
+			}
+		}
+		
+		return winMoves;
+	}
+	
+	public boolean isValidMove(int index)
 	{
 		if(0 > index || index > 13)
 		{
@@ -121,23 +160,42 @@ public class GameState
 		return true;
 	}
 	
+	public List<Integer> validMoves()
+	{
+		List<Integer> valid = new ArrayList<>();
+		
+		// only check ranges known to be owned by player
+		int start = (whoseTurn == Player.ONE) ? 0 : 7;
+		int finish = (whoseTurn == Player.ONE) ? 5 : 12;
+		
+		for(int i = start; i <= finish; i++)
+		{
+			if(isValidMove(i))
+			{
+				valid.add(i);
+			}
+		}
+		
+		return valid;
+	}
+	
 	public boolean gameWon()
 	{
 		boolean empty1 = true;
 		boolean empty2 = true;
 		
-		for (int i = 0; i < 6; i++)
+		for(int i = 0; i <= 5; i++)
 		{
-			if (board.stones(i) != 0)
+			if(board.stones(i) != 0)
 			{
 				empty1 = false;
 				break;
 			}
 		}
 		
-		for (int i = 7; i < 12; i++)
+		for(int i = 7; i <= 12; i++)
 		{
-			if (board.stones(i) != 0)
+			if(board.stones(i) != 0)
 			{
 				empty2 = false;
 				break;
@@ -169,6 +227,18 @@ public class GameState
 		
 		// only capture with stones in opposite bin
 		return board.stones(opp) != 0;
+	}
+	
+	public Player whoseTurn()
+	{
+		return whoseTurn;
+	}
+	
+	// returns -1 if the board is fresh. otherwise, returns last index a move
+	// was made from.
+	public int lastMoveFrom()
+	{
+		return lastMoveFrom;
 	}
 	
 	public Board getBoard()
