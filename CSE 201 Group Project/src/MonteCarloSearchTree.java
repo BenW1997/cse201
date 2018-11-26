@@ -1,6 +1,3 @@
-import java.util.List;
-import java.util.Objects;
-
 public class MonteCarloSearchTree
 {
 	// Exploration parameter - weight given to exploring less explored moves
@@ -14,14 +11,13 @@ public class MonteCarloSearchTree
 	{
 		this.gamePrototype = game;
 		this.root = new Node<>(new MonteCarloStats(gamePrototype));
-		expand(this.root);
 	}
 	
-	public Node<MonteCarloStats> bestChild()
+	public Node<MonteCarloStats> bestChild(Node<MonteCarloStats> parent)
 	{
 		Node<MonteCarloStats> best = null;
 		
-		for(Node<MonteCarloStats> n : root.getChildren())
+		for(Node<MonteCarloStats> n : parent.getChildren())
 		{
 			if(best == null)
 			{
@@ -38,15 +34,29 @@ public class MonteCarloSearchTree
 		return best;
 	}
 	
-	private void expand(Node<MonteCarloStats> node)
+	public Node<MonteCarloStats> select(Node<MonteCarloStats> from)
 	{
-		List<Integer> validMoves = node.getData().game().validMoves();
-		for(Integer i : validMoves)
+		if(from.getChildren().size() == 0)
 		{
-			GameState nextGame = new GameState(node.getData().game());
-			nextGame.move(i);
-			node.addChild(new MonteCarloStats(nextGame, i));
+			return from;
 		}
+		
+		Node<MonteCarloStats> max = null;
+		for(Node<MonteCarloStats> child : from.getChildren())
+		{
+			if(max == null)
+			{
+				max = child;
+				continue;
+			}
+			
+			if(child.getData().compareTo(max.getData()) > 0)
+			{
+				max = child;
+			}
+		}
+		
+		return select(max);
 	}
 	
 	/**
@@ -64,6 +74,12 @@ public class MonteCarloSearchTree
 	{
 		assert (w_i <= n_i);
 		assert (n_i <= t);
+		
+		// avoid division by zero
+		if(n_i == 0)
+		{
+			n_i = 1;
+		}
 		
 		return ((double) w_i) / ((double) n_i)
 				+ c * Math.sqrt(Math.log(t) / n_i);
