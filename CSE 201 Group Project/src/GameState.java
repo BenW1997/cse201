@@ -241,6 +241,14 @@ public class GameState
 		return lastMoveFrom;
 	}
 	
+	public Player winner()
+	{
+		int p1Score = board.getBins()[Board.mancalaOf(Player.ONE)];
+		int p2Score = board.getBins()[Board.mancalaOf(Player.TWO)];
+		
+		return p1Score > p2Score ? Player.ONE : Player.TWO;
+	}
+	
 	public Board getBoard()
 	{
 		return this.board;
