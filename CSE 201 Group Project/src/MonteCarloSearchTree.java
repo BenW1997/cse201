@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Stack;
+
 public class MonteCarloSearchTree
 {
 	// Exploration parameter - weight given to exploring less explored moves
@@ -6,15 +11,24 @@ public class MonteCarloSearchTree
 	
 	private Node<MonteCarloStats> root;
 	private GameState gamePrototype;
+	private Player thisPlayer;
+	private Random random = new Random();
 	
 	public MonteCarloSearchTree(GameState game)
 	{
 		this.gamePrototype = game;
 		this.root = new Node<>(new MonteCarloStats(gamePrototype));
+		this.thisPlayer = this.gamePrototype.whoseTurn();
 	}
 	
 	public Node<MonteCarloStats> bestChild(Node<MonteCarloStats> parent)
 	{
+		if(parent.isRoot())
+		{
+			return parent;
+		}
+		
+		
 		Node<MonteCarloStats> best = null;
 		
 		for(Node<MonteCarloStats> n : parent.getChildren())
@@ -36,27 +50,94 @@ public class MonteCarloSearchTree
 	
 	public Node<MonteCarloStats> select(Node<MonteCarloStats> from)
 	{
-		if(from.getChildren().size() == 0)
-		{
-			return from;
-		}
-		
+		// TODO double check logic
 		Node<MonteCarloStats> max = null;
-		for(Node<MonteCarloStats> child : from.getChildren())
+		double maxSelectionFunction = -1.0;
+		while(from.getChildren().size() > 0)
 		{
-			if(max == null)
+			for(Node<MonteCarloStats> child : from.getChildren())
 			{
-				max = child;
-				continue;
+				
+				if(max == null)
+				{
+					max = child;
+				}
+				
+				MonteCarloStats statNode = child.getData();
+				double selectionFunction = uct(statNode.wins(),
+						statNode.visits(), root.getData().visits(),
+						EXPLORATION);
+				
+				if(selectionFunction > maxSelectionFunction)
+				{
+					max = child;
+				}
 			}
 			
-			if(child.getData().compareTo(max.getData()) > 0)
-			{
-				max = child;
-			}
+			from = max;
+			max = null;
+			maxSelectionFunction = -1;
 		}
 		
 		return select(max);
+	}
+	
+	// returns new stat node based on random play
+	public MonteCarloStats simulate(Node<MonteCarloStats> leaf)
+	{
+		List<Integer> moveList;
+		GameState fromLeaf;
+		MonteCarloStats statsFrom = leaf.getData();
+		
+		// move up tree to get reversed move list
+		Stack<Integer> moveStack = new Stack<>();
+		Node<MonteCarloStats> current = leaf;
+		while(!current.isRoot())
+		{
+			moveStack.push(current.getData().move());
+			current = leaf.getParent();
+		}
+		
+		// pop off stack to get chronological order
+		moveList = new ArrayList<>(moveStack.size());
+		while(!moveStack.isEmpty())
+		{
+			moveList.add(moveStack.pop());
+		}
+		
+		// simulate up to where leaf left off
+		fromLeaf = new GameState(gamePrototype);
+		for(Integer m : moveList)
+		{
+			fromLeaf.move(m);
+		}
+		
+		// simulate random play until win condition is reached
+		while(!fromLeaf.gameWon())
+		{
+			fromLeaf.move(randomFromList(fromLeaf.validMoves()));
+		}
+		
+		if(fromLeaf.winner() == thisPlayer)
+		{
+			statsFrom.addWin();
+		}
+		else
+		{
+			statsFrom.addLoss();
+		}
+		
+		return statsFrom;
+	}
+	
+	private <E> E randomFromList(List<E> list)
+	{
+		E randomElement;
+		
+		int randIndex = random.nextInt(list.size());
+		randomElement = list.get(randIndex);
+		
+		return randomElement;
 	}
 	
 	/**
@@ -83,6 +164,11 @@ public class MonteCarloSearchTree
 		
 		return ((double) w_i) / ((double) n_i)
 				+ c * Math.sqrt(Math.log(t) / n_i);
+	}
+	
+	public Node<MonteCarloStats> getRoot()
+	{
+		return this.root;
 	}
 	
 	public String toString()
