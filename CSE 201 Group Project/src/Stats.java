@@ -20,10 +20,9 @@ public class Stats implements Comparable<Stats>
 		public void addWin()
 		{
 			wins++;
-			visits++;
 		}
 		
-		public void addLoss()
+		public void addVisit()
 		{
 			visits++;
 		}

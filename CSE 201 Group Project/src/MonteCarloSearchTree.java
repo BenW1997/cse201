@@ -121,11 +121,10 @@ public class MonteCarloSearchTree
 		if(fromLeaf.winner() == thisPlayer)
 		{
 			statsFrom.addWin();
+			
 		}
-		else
-		{
-			statsFrom.addLoss();
-		}
+
+		statsFrom.addVisit();
 		
 		return statsFrom;
 	}
