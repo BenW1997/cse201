@@ -9,7 +9,7 @@ public class MonteCarloSearchTree
 	// Best value found through experimentation
 	private final double EXPLORATION = Math.sqrt(2);
 	
-	private Node<MonteCarloStats> root;
+	private Node<Stats> root;
 	private GameState gamePrototype;
 	private Player thisPlayer;
 	private Random random = new Random();
@@ -17,11 +17,11 @@ public class MonteCarloSearchTree
 	public MonteCarloSearchTree(GameState game)
 	{
 		this.gamePrototype = game;
-		this.root = new Node<>(new MonteCarloStats(gamePrototype));
+		this.root = new Node<>(new Stats(gamePrototype));
 		this.thisPlayer = this.gamePrototype.whoseTurn();
 	}
 	
-	public Node<MonteCarloStats> bestChild(Node<MonteCarloStats> parent)
+	public Node<Stats> bestChild(Node<Stats> parent)
 	{
 		if(parent.isRoot())
 		{
@@ -29,9 +29,9 @@ public class MonteCarloSearchTree
 		}
 		
 		
-		Node<MonteCarloStats> best = null;
+		Node<Stats> best = null;
 		
-		for(Node<MonteCarloStats> n : parent.getChildren())
+		for(Node<Stats> n : parent.getChildren())
 		{
 			if(best == null)
 			{
@@ -48,14 +48,14 @@ public class MonteCarloSearchTree
 		return best;
 	}
 	
-	public Node<MonteCarloStats> select(Node<MonteCarloStats> from)
+	public Node<Stats> select(Node<Stats> from)
 	{
 		// TODO double check logic
-		Node<MonteCarloStats> max = null;
+		Node<Stats> max = null;
 		double maxSelectionFunction = -1.0;
 		while(from.getChildren().size() > 0)
 		{
-			for(Node<MonteCarloStats> child : from.getChildren())
+			for(Node<Stats> child : from.getChildren())
 			{
 				
 				if(max == null)
@@ -63,7 +63,7 @@ public class MonteCarloSearchTree
 					max = child;
 				}
 				
-				MonteCarloStats statNode = child.getData();
+				Stats statNode = child.getData();
 				double selectionFunction = uct(statNode.wins(),
 						statNode.visits(), root.getData().visits(),
 						EXPLORATION);
@@ -83,15 +83,15 @@ public class MonteCarloSearchTree
 	}
 	
 	// returns new stat node based on random play
-	public MonteCarloStats simulate(Node<MonteCarloStats> leaf)
+	public Stats simulate(Node<Stats> leaf)
 	{
 		List<Integer> moveList;
 		GameState fromLeaf;
-		MonteCarloStats statsFrom = leaf.getData();
+		Stats statsFrom = leaf.getData();
 		
 		// move up tree to get reversed move list
 		Stack<Integer> moveStack = new Stack<>();
-		Node<MonteCarloStats> current = leaf;
+		Node<Stats> current = leaf;
 		while(!current.isRoot())
 		{
 			moveStack.push(current.getData().move());
@@ -166,7 +166,7 @@ public class MonteCarloSearchTree
 				+ c * Math.sqrt(Math.log(t) / n_i);
 	}
 	
-	public Node<MonteCarloStats> getRoot()
+	public Node<Stats> getRoot()
 	{
 		return this.root;
 	}

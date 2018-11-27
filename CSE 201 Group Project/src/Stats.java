@@ -1,17 +1,17 @@
 
-public class MonteCarloStats implements Comparable<MonteCarloStats>
+public class Stats implements Comparable<Stats>
 	{
 		private int wins = 0;
 		private int visits = 0;
 		private GameState game;
 		private Integer move;
 		
-		public MonteCarloStats(GameState game)
+		public Stats(GameState game)
 		{
 			this.game = game;
 		}
 		
-		public MonteCarloStats(GameState game, Integer move)
+		public Stats(GameState game, Integer move)
 		{
 			this.game = game;
 			this.move = move;
@@ -81,7 +81,7 @@ public class MonteCarloStats implements Comparable<MonteCarloStats>
 			return sb.toString();
 		}
 		
-		public int compareTo(MonteCarloStats arg0)
+		public int compareTo(Stats arg0)
 		{
 			return Double.compare(this.visits(), arg0.visits());
 		}
