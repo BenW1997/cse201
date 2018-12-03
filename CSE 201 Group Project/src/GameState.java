@@ -47,6 +47,7 @@ public class GameState
 		}
 		
 		setOfMoveSets.forEach(moveSet -> moveAll(moveSet));
+		whoseTurn = whoseTurn.opposite();
 		return setOfMoveSets;
 	}
 	
@@ -239,6 +240,14 @@ public class GameState
 	public int lastMoveFrom()
 	{
 		return lastMoveFrom;
+	}
+	
+	public Player winner()
+	{
+		int p1Score = board.getBins()[Board.mancalaOf(Player.ONE)];
+		int p2Score = board.getBins()[Board.mancalaOf(Player.TWO)];
+		
+		return p1Score > p2Score ? Player.ONE : Player.TWO;
 	}
 	
 	public Board getBoard()
