@@ -63,7 +63,7 @@ public class MachineInput implements PlayerInput
 	{
 		// return true when capture of pieces on other side of board is possible
 		// find space where final stone would end up
-		int target = move + boardState.stones(move);
+		int target = (move + boardState.stones(move)) % 14;
 		// find space on opposite side of target
 		int opp = Board.getOppositeIndex(target);
 		if(boardState.stones(target) == 0 && boardState.stones(opp) > 0)
