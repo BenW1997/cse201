@@ -47,6 +47,7 @@ public class GameState
 		}
 		
 		setOfMoveSets.forEach(moveSet -> moveAll(moveSet));
+		whoseTurn = whoseTurn.opposite();
 		return setOfMoveSets;
 	}
 	
